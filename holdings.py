@@ -3,7 +3,6 @@ from kiteconnect import KiteConnect
 from flask import Flask, request, jsonify, session
 import os
 import json
-import logging
 from datetime import date, datetime
 from decimal import Decimal
 
@@ -13,26 +12,17 @@ kite_api_key = "9d0gkan3mpw88evk"
 
 kite = KiteConnect(api_key=kite_api_key)
 
-request_token = "Q4uZwnmJvksISM4hQYwqxHRD9jkXL7NT"
-
-# if not request_token:
-#     return """
-#         <span style="color: red">
-#             Error while gene    rating request token.
-#         </span>
-#         <a href='/'>Try again.<a>"""
-
-
-
 # Redirect the user to the login url obtained
 # from kite.login_url(), and receive the request_token
 # from the registered redirect url after the login flow.
 # Once you have the request_token, obtain the access_token
 # as follows.
 
+with open('access_token.txt', 'r') as f:
+    access_token = f.read()
 
-data = kite.generate_session(request_token, api_secret="a6ypingsg5omsltkw9bgy6la3d0znsna")
-kite.set_access_token(data["access_token"])
+
+kite.set_access_token(access_token)
 
 # Place an order
 # try:
