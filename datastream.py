@@ -1,5 +1,8 @@
 import logging
 from kiteconnect import KiteTicker
+from token_search import token_search
+
+
 logging.basicConfig(level=logging.DEBUG)
 
 kite_api_key = "9d0gkan3mpw88evk"
@@ -23,8 +26,8 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    ws.subscribe([9917954])
-    ws.set_mode(ws.MODE_FULL, [9917954])
+    ws.subscribe(instruments_num)
+    ws.set_mode(ws.MODE_FULL, instruments_num)
 
 def on_close(ws, code, reason):
     ws.stop()
@@ -32,5 +35,7 @@ def on_close(ws, code, reason):
 kws.on_ticks = on_ticks
 kws.on_connect = on_connect
 kws.on_close = on_close
+
+instruments_num = token_search(instruments)
 
 kws.connect()
